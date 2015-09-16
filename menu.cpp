@@ -6,6 +6,8 @@ Menu::Menu(QWidget *parent) :
     ui(new Ui::Menu)
 {
     ui->setupUi(this);
+    QPixmap pix("../picmenu.jpg");
+    ui->pictureMenu->setPixmap(pix);
 }
 
 Menu::~Menu()
