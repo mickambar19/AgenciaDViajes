@@ -8,6 +8,7 @@ MenuDestinos::MenuDestinos(QWidget *parent) :
     ui->setupUi(this);
     ui->inputCodigoD->setEnabled(false);
     ui->inputCodigoD->setText( QString::number(contarRegistros()));
+
 }
 
 MenuDestinos::~MenuDestinos()
@@ -331,7 +332,6 @@ void MenuDestinos::on_botonBuscarModDest_clicked()
 void MenuDestinos::on_botonGuardarModDest_clicked()
 {
     int a;
-
     char cod[MAX_CARACTERES];
     char nombre[MAX_CARACTERES];
     char tipo[MAX_CARACTERES];

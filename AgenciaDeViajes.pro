@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         menu.cpp \
     destino.cpp \
     menudestinos.cpp \
-    menuempleados.cpp
+    menuempleados.cpp \
+    empleado.cpp
 
 HEADERS  += menu.h \
     destino.h \
     menudestinos.h \
-    menuempleados.h
+    menuempleados.h \
+    empleado.h
 
 FORMS    += menu.ui \
     menudestinos.ui \

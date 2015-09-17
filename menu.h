@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 #include "menudestinos.h"
+#include "menuempleados.h"
 #include <QWidget>
 
 namespace Ui {
@@ -18,9 +19,12 @@ public:
 private slots:
     void on_botonDestino_clicked();
 
+    void on_botonEmpleados_clicked();
+
 private:
     Ui::Menu *ui;
     MenuDestinos *menuDestino;
+    MenuEmpleados *menuEmpleado;
 
 };
 
