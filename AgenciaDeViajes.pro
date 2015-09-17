@@ -14,12 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         menu.cpp \
-    destino.cpp
+    destino.cpp \
+    menudestinos.cpp
 
 HEADERS  += menu.h \
-    destino.h
+    destino.h \
+    menudestinos.h
 
-FORMS    += menu.ui
+FORMS    += menu.ui \
+    menudestinos.ui
 
 CONFIG += mobility
 MOBILITY = 

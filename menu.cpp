@@ -8,9 +8,15 @@ Menu::Menu(QWidget *parent) :
     ui->setupUi(this);
     QPixmap pix("../picmenu.jpg");
     ui->pictureMenu->setPixmap(pix);
+    menuDestino = new MenuDestinos;
 }
 
 Menu::~Menu()
 {
     delete ui;
+}
+
+void Menu::on_botonDestino_clicked()
+{
+    menuDestino->show();
 }

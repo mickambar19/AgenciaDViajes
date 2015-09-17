@@ -46,6 +46,28 @@ void Destino::setEstatusDestino(string value)
 {
     strcpy(estatusDestino , value.c_str());
 }
+
+void Destino::guardar()
+{
+    ofstream esc("Destinos.txt",ios::app);
+    int tamanio;
+    char buffer[MAX_CARACTERES];
+    itoa(codigoDestino,buffer,10);
+    tamanio = strlen(buffer);
+    esc.write((char *)&tamanio,sizeof(int));
+    esc.write((char *)&buffer,tamanio);
+    tamanio = strlen(nombreDestino);
+    esc.write((char *)&tamanio,sizeof(int));
+    esc.write((char *)&nombreDestino,tamanio);
+    tamanio = strlen(tipoDestino);
+    esc.write((char *)&tamanio,sizeof(int));
+    esc.write((char *)&tipoDestino,tamanio);
+    tamanio = strlen(estatusDestino);
+    esc.write((char *)&tamanio,sizeof(int));
+    esc.write((char *)&estatusDestino,tamanio);
+    esc.close();
+
+}
 Destino::Destino()
 {
 

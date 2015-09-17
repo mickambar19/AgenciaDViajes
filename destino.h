@@ -2,6 +2,8 @@
 #define DESTINO_H
 #include <iostream>
 #include <cstring> //Para copiar string to char y comparar
+#include <cstdlib> //itoa
+#include <fstream>
 #define MAX_CARACTERES 35
 using namespace std;
 class Destino
@@ -13,7 +15,6 @@ private:
     char estatusDestino[MAX_CARACTERES];
 public:
     Destino();
-
     int getCodigoDestino() const;
     void setCodigoDestino(int value);
     string getNombreDestino() const;
@@ -22,6 +23,7 @@ public:
     void setTipoDestino(string value);
     string getEstatusDestino() const;
     void setEstatusDestino(string value);
+    void guardar();
 };
 
 #endif // DESTINO_H
