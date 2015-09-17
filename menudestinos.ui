@@ -6,24 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>455</width>
-    <height>407</height>
+    <width>527</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Menu Destinos</string>
   </property>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>401</width>
-     <height>371</height>
+     <x>20</x>
+     <y>10</y>
+     <width>481</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -32,67 +32,59 @@
     <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>10</y>
-       <width>381</width>
-       <height>301</height>
+       <x>40</x>
+       <y>30</y>
+       <width>377</width>
+       <height>297</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLineEdit" name="inputCodigoD">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Codigo</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputNombreD">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Nombre</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputTipoD">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Tipo &quot;E&quot; entrada o &quot;N&quot;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputEstatusD">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Estatus &quot;A&quot; o &quot;I&quot;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="botonAceptarAgregar">
-            <property name="text">
-             <string>Aceptar</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+       <widget class="QLineEdit" name="inputCodigoD">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Codigo</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputNombreD">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Nombre</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputTipoD">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Tipo &quot;E&quot; entrada o &quot;N&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputEstatusD">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Estatus &quot;A&quot; o &quot;I&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="botonAceptarAgregar">
+        <property name="text">
+         <string>Aceptar</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -101,18 +93,185 @@
     <attribute name="title">
      <string>Modificar</string>
     </attribute>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>371</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="inputCodigoDModificar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Codigo</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputNombreDModificar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Nombre</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputTipoDModificar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Tipo &quot;E&quot; entrada o &quot;N&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputEstatusDModificar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Estatus &quot;A&quot; o &quot;I&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="botonBuscarModDest">
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="botonGuardarModDest">
+          <property name="text">
+           <string>Guardar</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QTableWidget" name="tablaModificarDestinos">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>230</y>
+       <width>431</width>
+       <height>121</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="Mostrar">
     <attribute name="title">
      <string>Mostrar</string>
     </attribute>
+    <widget class="QTableWidget" name="tablaDestinos">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>20</y>
+       <width>411</width>
+       <height>291</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="botonActualizarDestinos">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>320</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Actualizar</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
      <string>Eliminar</string>
     </attribute>
+    <widget class="QWidget" name="layoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>30</y>
+       <width>377</width>
+       <height>297</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="inputCodigoDEliminar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Codigo</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputNombreDEliminar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Nombre</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputTipoDEliminar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Tipo &quot;E&quot; entrada o &quot;N&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputEstatusDEliminar">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>Estatus &quot;A&quot; o &quot;I&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="botonEliminarDestino">
+        <property name="text">
+         <string>Eliminar</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
+  <zorder>tabWidget</zorder>
+  <zorder>inputTipoDModificar</zorder>
  </widget>
  <resources/>
  <connections/>

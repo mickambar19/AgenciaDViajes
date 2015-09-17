@@ -7,6 +7,7 @@
 using namespace std;
 #include <QWidget>
 #include <QMessageBox>
+#include <QTableWidgetItem>
 namespace Ui {
 class MenuDestinos;
 }
@@ -18,9 +19,21 @@ class MenuDestinos : public QWidget
 public:
     explicit MenuDestinos(QWidget *parent = 0);
     ~MenuDestinos();
+    void limpiarVentana();
+    void limpiarTablaDestinos();
+    int contarRegistros();
+    void reEnumerar();
 private slots:
 
     void on_botonAceptarAgregar_clicked();
+
+    void on_botonActualizarDestinos_clicked();
+
+    void on_botonBuscarModDest_clicked();
+
+    void on_botonGuardarModDest_clicked();
+
+    void on_botonEliminarDestino_clicked();
 
 private:
     Ui::MenuDestinos *ui;
