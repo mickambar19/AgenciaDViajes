@@ -10,6 +10,7 @@ Menu::Menu(QWidget *parent) :
     ui->pictureMenu->setPixmap(pix);
     menuDestino = new MenuDestinos;
     menuEmpleado = new MenuEmpleados;
+    menuVuelos = new MenuVuelos;
 }
 
 Menu::~Menu()
@@ -25,4 +26,9 @@ void Menu::on_botonDestino_clicked()
 void Menu::on_botonEmpleados_clicked()
 {
     menuEmpleado->show();
+}
+
+void Menu::on_botonVuelos_clicked()
+{
+    menuVuelos->show();
 }
