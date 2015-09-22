@@ -17,17 +17,20 @@ SOURCES += main.cpp\
     destino.cpp \
     menudestinos.cpp \
     menuempleados.cpp \
-    empleado.cpp
+    empleado.cpp \
+    menuvuelos.cpp
 
 HEADERS  += menu.h \
     destino.h \
     menudestinos.h \
     menuempleados.h \
-    empleado.h
+    empleado.h \
+    menuvuelos.h
 
 FORMS    += menu.ui \
     menudestinos.ui \
-    menuempleados.ui
+    menuempleados.ui \
+    menuvuelos.ui
 
 CONFIG += mobility
 MOBILITY = 
