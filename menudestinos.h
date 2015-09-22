@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "destino.h"
+#include "funciones.h"
 #include <string>
 using namespace std;
 #include <QWidget>

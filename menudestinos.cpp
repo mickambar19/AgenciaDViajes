@@ -402,6 +402,7 @@ void MenuDestinos::on_botonGuardarModDest_clicked()
 void MenuDestinos::on_botonEliminarDestino_clicked()
 {
     int tamanioCadena;
+    int posicion=0;
     char codigo[MAX_CARACTERES];
     char nombre[MAX_CARACTERES];
     char tipo[MAX_CARACTERES];
@@ -410,6 +411,7 @@ void MenuDestinos::on_botonEliminarDestino_clicked()
     bool seEncontro = false;
     ifstream lee("Destinos.txt",ios::app);
     ofstream escA("Auxiliar.txt",ios::app);
+
     if(!lee.good())
     {
         QMessageBox msgBox;
@@ -431,19 +433,26 @@ void MenuDestinos::on_botonEliminarDestino_clicked()
             lee.read((char *)&tamanioCadena,sizeof(int));
             lee.read((char *)&estatus, tamanioCadena);
             estatus[tamanioCadena] = '\0';
+
             //Ya leyo todas las partes del objeto
             if(lee.eof())break;
             if(ui->inputCodigoDEliminar->text().toStdString()!= "" && strcmp(codigo,ui->inputCodigoDEliminar->text().toStdString().c_str())== 0){
                 seEncontro = true;
-
+                eliminarDestinoEnMatriz(posicion);
+                QMessageBox msgBox;
+                msgBox.setText(QString::number(posicion));
+                msgBox.exec();
             } else if(ui->inputNombreDEliminar->text().toStdString()!="" && strcmp(nombre,ui->inputNombreDEliminar->text().toStdString().c_str())== 0){
                 seEncontro = true;
+                eliminarDestinoEnMatriz(posicion);
 
             } else if(ui->inputTipoDEliminar->text().toStdString()!="" && strcmp(tipo,ui->inputTipoDEliminar->text().toStdString().c_str())== 0){
                 seEncontro = true;
+                eliminarDestinoEnMatriz(posicion);
 
             } else if(ui->inputEstatusDEliminar->text().toStdString()!="" && strcmp(estatus,ui->inputEstatusDEliminar->text().toStdString().c_str())==0){
                 seEncontro = true;
+                eliminarDestinoEnMatriz(posicion);
             }else{
                 a=strlen(codigo);
                 escA.write((char *)&a, sizeof(int));
@@ -462,6 +471,7 @@ void MenuDestinos::on_botonEliminarDestino_clicked()
                 escA.write((char *)&estatus, a);
 
             }
+            posicion++;
             if(lee.eof())break;
        }
     }
@@ -486,3 +496,4 @@ void MenuDestinos::on_botonEliminarDestino_clicked()
     ui->inputCodigoD->setText(QString::number(contarRegistros()));
 
 }
+

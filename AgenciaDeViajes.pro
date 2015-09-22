@@ -18,19 +18,24 @@ SOURCES += main.cpp\
     menudestinos.cpp \
     menuempleados.cpp \
     empleado.cpp \
-    menuvuelos.cpp
+    menuvuelos.cpp \
+    modpeso.cpp \
+    funciones.cpp
 
 HEADERS  += menu.h \
     destino.h \
     menudestinos.h \
     menuempleados.h \
     empleado.h \
-    menuvuelos.h
+    menuvuelos.h \
+    modpeso.h \
+    funciones.h
 
 FORMS    += menu.ui \
     menudestinos.ui \
     menuempleados.ui \
-    menuvuelos.ui
+    menuvuelos.ui \
+    modpeso.ui
 
 CONFIG += mobility
 MOBILITY = 
