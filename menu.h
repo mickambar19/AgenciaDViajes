@@ -3,6 +3,7 @@
 #include "menudestinos.h"
 #include "menuempleados.h"
 #include "menuvuelos.h"
+#include "menuhoteles2.h"
 #include <QWidget>
 
 namespace Ui {
@@ -24,11 +25,14 @@ private slots:
 
     void on_botonVuelos_clicked();
 
+    void on_botonHoteles_clicked();
+
 private:
     Ui::Menu *ui;
     MenuDestinos *menuDestino;
     MenuEmpleados *menuEmpleado;
     MenuVuelos *menuVuelos;
+    MenuHoteles2 *menuHoteles;
 
 };
 

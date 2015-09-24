@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     menuvuelos.cpp \
     modpeso.cpp \
     funciones.cpp \
-    hotel.cpp
+    hotel.cpp \
+    indicehotel.cpp \
+    menuhoteles2.cpp
 
 HEADERS  += menu.h \
     destino.h \
@@ -31,13 +33,16 @@ HEADERS  += menu.h \
     menuvuelos.h \
     modpeso.h \
     funciones.h \
-    hotel.h
+    hotel.h \
+    indicehotel.h \
+    menuhoteles2.h
 
 FORMS    += menu.ui \
     menudestinos.ui \
     menuempleados.ui \
     menuvuelos.ui \
-    modpeso.ui
+    modpeso.ui \
+    menuhoteles2.ui
 
 CONFIG += mobility
 MOBILITY = 

@@ -11,6 +11,8 @@ Menu::Menu(QWidget *parent) :
     menuDestino = new MenuDestinos;
     menuEmpleado = new MenuEmpleados;
     menuVuelos = new MenuVuelos;
+    menuDestino = new MenuDestinos;
+    menuHoteles = new MenuHoteles2;
 }
 
 Menu::~Menu()
@@ -31,4 +33,9 @@ void Menu::on_botonEmpleados_clicked()
 void Menu::on_botonVuelos_clicked()
 {
     menuVuelos->show();
+}
+
+void Menu::on_botonHoteles_clicked()
+{
+    menuHoteles->show();
 }
