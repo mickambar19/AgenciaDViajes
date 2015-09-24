@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     empleado.cpp \
     menuvuelos.cpp \
     modpeso.cpp \
-    funciones.cpp
+    funciones.cpp \
+    hotel.cpp
 
 HEADERS  += menu.h \
     destino.h \
@@ -29,7 +30,8 @@ HEADERS  += menu.h \
     empleado.h \
     menuvuelos.h \
     modpeso.h \
-    funciones.h
+    funciones.h \
+    hotel.h
 
 FORMS    += menu.ui \
     menudestinos.ui \
