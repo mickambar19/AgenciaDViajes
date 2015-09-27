@@ -52,19 +52,19 @@ void MenuHoteles2::on_botonAceptarAgregaHotel_clicked()
         hotel.setTipo(tipo.toStdString());
         hotel.setTarifa(tarifa.toStdString());
         indice.setLlave(hotel.getCodigo());
-        ofstream escH("Hoteles.txt");
-        ofstream escI("Indices.txt");
+        ofstream escH("Hoteles.txt",ios::out);
+        ofstream escI("Indices.txt",ios::out);
         escH.write((char *)&hotel,sizeof(Hotel));
         escH.seekp(0,escH.end);
+        QMessageBox msgBox;
+        msgBox.setText(QString::number(escH.tellp()));
+        msgBox.exec();
         indice.setPosicion(escH.tellp());
         indice.setPosicion(indice.getPosicion()-sizeof(Hotel));
+        indice.setPosicion(indice.getPosicion()-1);
         escI.write((char *)&indice,sizeof(indice));
         escI.close();
         escH.close();
-        QMessageBox msgBox;
-        msgBox.setText("Nuevo Hotel:\n Codigo:"+codigo+"\nPais:"+paisDeHotel+"\nNombre:"+nombreHotel+"\nTipo:"+tipo+"\nTarifa"+tarifa);
-        msgBox.setInformativeText("Nuevo Hotel:\n Codigo:"+QString::fromStdString(hotel.getCodigo())+"\nPais:"+QString::fromStdString(hotel.getPaisDeHotel())+"\nNombre:"+QString::fromStdString(hotel.getNombreHotel())+"\nTipo:"+QString::fromStdString(hotel.getTipo())+"\nTarifa"+QString::fromStdString(hotel.getTarifa()));
-        msgBox.exec();
     }
 }
 
@@ -112,7 +112,7 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
     QTableWidgetItem *elemento;
     Hotel hotel;
     IndiceHotel indice;
-    ifstream leerI("Indices.txt",ios::app);
+    ifstream leerI("Indices.txt");
     QStringList titulosParteSuperior;
     int i = 0;
     titulosParteSuperior<<"Codigo"<<"NombrePais"<<"NombreHotel"<<"Tarifa"<<"Tipo";
@@ -135,8 +135,12 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
 
             ui->tablaHoteles->insertRow(i);
             leerI.read((char*)&indice,sizeof(indice));
-            ifstream leerH("Hotel.txt");
-            leerH.seekg(indice.posicion,ios::beg);
+            QMessageBox msgBox2;
+            msgBox2.setText("Indice leido" );
+            msgBox2.setInformativeText(QString::number(indice.getPosicion())+"\nLLave:"+QString::fromStdString(indice.getLlave()));
+            msgBox2.exec();
+            ifstream leerH("Hoteles.txt",ios::out);
+            leerH.seekg(indice.getPosicion(),ios::beg);
             leerH.read((char*)&hotel,sizeof(Hotel));
             QMessageBox msgBox;
             msgBox.setText("Hotel leido" );
