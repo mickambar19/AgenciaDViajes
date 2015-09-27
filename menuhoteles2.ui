@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -50,14 +50,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="inputCodigoPaisHotel">
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="placeholderText">
-         <string>Pais</string>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="paisComboBox"/>
       </item>
       <item>
        <widget class="QLineEdit" name="inputNombreHotel">
@@ -205,7 +198,7 @@
     <attribute name="title">
      <string>Mostrar</string>
     </attribute>
-    <widget class="QTableWidget" name="tablaEmpleados">
+    <widget class="QTableWidget" name="tablaHoteles">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -215,7 +208,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="botonActualizarEmpleados">
+    <widget class="QPushButton" name="botonActualizarHoteles">
      <property name="geometry">
       <rect>
        <x>450</x>

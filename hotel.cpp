@@ -1,55 +1,54 @@
 #include "hotel.h"
 #include <cstring>
 
-
-int Hotel::getCodigo() const
+string Hotel::getCodigo() const
 {
     return codigo;
 }
 
-void Hotel::setCodigo(int value)
+void Hotel::setCodigo(string value)
 {
-    codigo = value;
+    strcpy(codigo , value.c_str());
 }
 
-int Hotel::getCodigoPais() const
+string Hotel::getPaisDeHotel() const
 {
-    return codigoPais;
+    return paisDeHotel;
 }
 
-void Hotel::setCodigoPais(int value)
+void Hotel::setPaisDeHotel(string value)
 {
-    codigoPais = value;
+    strcpy(paisDeHotel , value.c_str());
 }
 
-char *Hotel::getNombreHotel()
+string Hotel::getNombreHotel() const
 {
     return nombreHotel;
 }
 
 void Hotel::setNombreHotel(string value)
 {
-    strcpy(nombreHotel,value.c_str());
+    strcpy(nombreHotel , value.c_str());
 }
 
-int Hotel::getTarifa() const
+string Hotel::getTarifa() const
 {
     return tarifa;
 }
 
-void Hotel::setTarifa(int value)
+void Hotel::setTarifa(string value)
 {
-    tarifa = value;
+    strcpy(tarifa , value.c_str());
 }
 
-char* Hotel::getTipo()
+string Hotel::getTipo() const
 {
     return tipo;
 }
 
 void Hotel::setTipo(string value)
 {
-    strcpy(tipo,value.c_str());
+    strcpy(tipo , value.c_str());
 }
 Hotel::Hotel()
 {

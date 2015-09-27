@@ -1,17 +1,18 @@
 #ifndef INDICEHOTEL_H
 #define INDICEHOTEL_H
-
+#include <iostream>
+using namespace std;
 class IndiceHotel
 {
 public:
     long int posicion;
-    int llave;//CodigoDelHotel
+    char llave[30];//CodigoDelHotel
 public:
     IndiceHotel();
     long getPosicion() const;
     void setPosicion(long value);
-    int getLlave() const;
-    void setLlave(int value);
+    string getLlave() const;
+    void setLlave(string value);
 };
 
 #endif // INDICEHOTEL_H

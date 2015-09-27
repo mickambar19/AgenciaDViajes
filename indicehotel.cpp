@@ -1,4 +1,5 @@
 #include "indicehotel.h"
+#include <cstring>
 
 
 long IndiceHotel::getPosicion() const
@@ -11,14 +12,17 @@ void IndiceHotel::setPosicion(long value)
     posicion = value;
 }
 
-int IndiceHotel::getLlave() const
+string IndiceHotel::getLlave() const
 {
+    string nombreDestinoString;
+    nombreDestinoString.assign(llave);
+    return nombreDestinoString;
     return llave;
 }
 
-void IndiceHotel::setLlave(int value)
+void IndiceHotel::setLlave(string value)
 {
-    llave = value;
+    strcpy(llave , value.c_str());
 }
 IndiceHotel::IndiceHotel()
 {

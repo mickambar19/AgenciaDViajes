@@ -22,6 +22,9 @@ public:
 
 private slots:
     void on_botonAceptarAgregaHotel_clicked();
+    void cargar_Paises();
+
+    void on_botonActualizarHoteles_clicked();
 
 private:
     Ui::MenuHoteles2 *ui;

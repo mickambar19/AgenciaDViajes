@@ -6,22 +6,22 @@ using namespace std;
 class Hotel
 {
 public:
-    int codigo;
-    int codigoPais;
+    char codigo[MAX_CARS];
+    char paisDeHotel[MAX_CARS];
     char nombreHotel[MAX_CARS];
-    int tarifa;
+    char tarifa[MAX_CARS];
     char tipo[MAX_CARS];
 public:
     Hotel();
-    int getCodigo() const;
-    void setCodigo(int value);
-    int getCodigoPais() const;
-    void setCodigoPais(int value);
-    char *getNombreHotel();
+    string getCodigo() const;
+    void setCodigo(string value);
+    string getPaisDeHotel() const;
+    void setPaisDeHotel(string value);
+    string getNombreHotel() const;
     void setNombreHotel(string value);
-    int getTarifa() const;
-    void setTarifa(int value);
-    char* getTipo();
+    string getTarifa() const;
+    void setTarifa(string value);
+    string getTipo() const;
     void setTipo(string value);
 };
 
