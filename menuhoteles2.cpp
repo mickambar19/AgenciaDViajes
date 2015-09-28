@@ -51,18 +51,24 @@ void MenuHoteles2::on_botonAceptarAgregaHotel_clicked()
         hotel.setNombreHotel(nombreHotel.toStdString());
         hotel.setTipo(tipo.toStdString());
         hotel.setTarifa(tarifa.toStdString());
+
+        ofstream escH("Hoteles.txt",ios::app);
+        ofstream escI("Indices.txt",ios::app);
+
+        long int diceTel;
+        escH.write((char*)&hotel,sizeof(Hotel));
         indice.setLlave(hotel.getCodigo());
-        ofstream escH("Hoteles.txt",ios::out);
-        ofstream escI("Indices.txt",ios::out);
-        escH.write((char *)&hotel,sizeof(Hotel));
         escH.seekp(0,escH.end);
+        indice.posicion=escH.tellp();
+        diceTel = escH.tellp();
+        indice.setPosicion(indice.posicion-sizeof(Hotel));
+        escI.write((char*)&indice,sizeof(indice));
         QMessageBox msgBox;
-        msgBox.setText(QString::number(escH.tellp()));
+        msgBox.setText("Inicio de objeto:"+QString::number(indice.getPosicion())+
+                       "\nFin de objeto:"+QString::number(indice.getPosicion()+sizeof(hotel))+
+                       "\nDice tellp:"+QString::number(diceTel));
+
         msgBox.exec();
-        indice.setPosicion(escH.tellp());
-        indice.setPosicion(indice.getPosicion()-sizeof(Hotel));
-        indice.setPosicion(indice.getPosicion()-1);
-        escI.write((char *)&indice,sizeof(indice));
         escI.close();
         escH.close();
     }
@@ -107,8 +113,27 @@ void MenuHoteles2::cargar_Paises()
     ui->paisComboBox->addItems(paisesDisponibles);
 }
 
+void MenuHoteles2::limpiarTablaHoteles()
+{
+    for(int i = 0; i <ui->tablaHoteles->rowCount();)
+    {
+        delete ui->tablaHoteles->item(i,0);
+        delete ui->tablaHoteles->item(i,1);
+        delete ui->tablaHoteles->item(i,2);
+        delete ui->tablaHoteles->item(i,3);
+        delete ui->tablaHoteles->item(i,4);
+
+        ui->tablaHoteles->removeRow(i);
+    }
+    for(int i = 0; i < ui->tablaHoteles->columnCount();)
+    {
+        ui->tablaHoteles->removeColumn(i);
+    }
+}
+
 void MenuHoteles2::on_botonActualizarHoteles_clicked()
 {
+    limpiarTablaHoteles();
     QTableWidgetItem *elemento;
     Hotel hotel;
     IndiceHotel indice;
@@ -135,17 +160,15 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
 
             ui->tablaHoteles->insertRow(i);
             leerI.read((char*)&indice,sizeof(indice));
-            QMessageBox msgBox2;
-            msgBox2.setText("Indice leido" );
-            msgBox2.setInformativeText(QString::number(indice.getPosicion())+"\nLLave:"+QString::fromStdString(indice.getLlave()));
-            msgBox2.exec();
-            ifstream leerH("Hoteles.txt",ios::out);
-            leerH.seekg(indice.getPosicion(),ios::beg);
-            leerH.read((char*)&hotel,sizeof(Hotel));
+
+            ifstream leerH("Hoteles.txt",ios::app);
             QMessageBox msgBox;
-            msgBox.setText("Hotel leido" );
-            msgBox.setInformativeText("Nuevo Hotel:\n Codigo:"+QString::fromStdString(hotel.getCodigo())+"\nPais:"+QString::fromStdString(hotel.getPaisDeHotel())+"\nNombre:"+QString::fromStdString(hotel.getNombreHotel())+"\nTipo:"+QString::fromStdString(hotel.getTipo())+"\nTarifa"+QString::fromStdString(hotel.getTarifa()));
+
+            msgBox.setText("Tellp:"+QString::number(leerH.tellg()));
             msgBox.exec();
+            leerH.seekg(indice.getPosicion()-1,leerH.beg);
+            leerH.read((char*)&hotel,sizeof(Hotel));
+
             if(leerI.eof())break;
             elemento = new QTableWidgetItem(QString::fromStdString(hotel.getCodigo()));
             ui->tablaHoteles->setItem(i,0,elemento);
@@ -159,8 +182,123 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
             ui->tablaHoteles->setItem(i,4,elemento);
             i++;
             if(leerI.eof())break;
+            leerH.close();
         }
     }
     ui->tablaHoteles->removeRow(ui->tablaHoteles->rowCount()-1);
     leerI.close();
+}
+
+void MenuHoteles2::on_botonBuscarModHoteles_clicked()
+{
+    QTableWidgetItem *elemento;
+    Hotel hotel;
+    IndiceHotel indice;
+    ifstream leerI("Indices.txt");
+    QStringList titulosParteSuperior;
+    int i = 0;
+    titulosParteSuperior<<"Codigo"<<"NombrePais"<<"NombreHotel"<<"Tarifa"<<"Tipo";
+    //limpiartablaHoteles();
+    if(!leerI.good())
+    {
+        QMessageBox msgBox;
+        msgBox.setText("No existe el archivo de Empleados");
+        msgBox.exec();
+    }else
+    {
+        ui->tablaModificarHoteles->insertColumn(0);
+        ui->tablaModificarHoteles->insertColumn(1);
+        ui->tablaModificarHoteles->insertColumn(2);
+        ui->tablaModificarHoteles->insertColumn(3);
+        ui->tablaModificarHoteles->insertColumn(4);
+        ui->tablaModificarHoteles->setHorizontalHeaderLabels(titulosParteSuperior);
+        while(!leerI.eof())
+        {
+
+            leerI.read((char*)&indice,sizeof(indice));
+
+            ifstream leerH("Hoteles.txt",ios::app);
+            QMessageBox msgBox;
+
+            msgBox.setText("Tellp:"+QString::number(leerH.tellg()));
+            msgBox.exec();
+            leerH.seekg(indice.getPosicion()-1,leerH.beg);
+            leerH.read((char*)&hotel,sizeof(Hotel));
+            QString actualHotel = QString::fromStdString(hotel.getCodigo());
+            if(leerI.eof())break;
+            if(actualHotel.toInt() == ui->inputCodigoHotelMod->text().toInt()){
+                ui->tablaModificarHoteles->insertRow(i);
+                elemento = new QTableWidgetItem(QString::fromStdString(hotel.getCodigo()));
+                ui->tablaModificarHoteles->setItem(i,0,elemento);
+                elemento = new QTableWidgetItem(QString::fromStdString(hotel.getPaisDeHotel()));
+                ui->tablaModificarHoteles->setItem(i,1,elemento);
+                elemento = new QTableWidgetItem(QString::fromStdString(hotel.getNombreHotel()));
+                ui->tablaModificarHoteles->setItem(i,2,elemento);
+                elemento = new QTableWidgetItem(QString::fromStdString(hotel.getTipo()));
+                ui->tablaModificarHoteles->setItem(i,3,elemento);
+                elemento = new QTableWidgetItem(QString::fromStdString(hotel.getTarifa()));
+                ui->tablaModificarHoteles->setItem(i,4,elemento);
+                i++;
+            }
+            if(leerI.eof())break;
+            leerH.close();
+        }
+    }
+    leerI.close();
+
+}
+
+void MenuHoteles2::on_botonEliminarModHoteles_clicked()
+{
+
+    Hotel hotel;
+    IndiceHotel indice;
+    ifstream leerI("Indices.txt");
+    ofstream escAI("IndicesAux.txt",ios::app);
+    ofstream escAH("HotelesAux.txt",ios::app);
+    //limpiartablaHoteles();
+    if(!leerI.good())
+    {
+        QMessageBox msgBox;
+        msgBox.setText("No existe el archivo de Empleados");
+        msgBox.exec();
+    }else
+    {
+        while(!leerI.eof())
+        {
+
+            leerI.read((char*)&indice,sizeof(indice));
+
+            ifstream leerH("Hoteles.txt",ios::app);
+
+            leerH.seekg(indice.getPosicion()-1,leerH.beg);
+            leerH.read((char*)&hotel,sizeof(Hotel));
+            QString actualHotel = QString::fromStdString(hotel.getCodigo());
+            if(leerI.eof())break;
+            if(actualHotel.toInt() != ui->inputCodigoHotelEliminar->text().toInt()){
+
+                escAH.write((char *)&hotel,sizeof(Hotel));
+                escAH.seekp(0,escAH.end);
+                indice.setLlave(hotel.getCodigo());
+                indice.setPosicion(escAH.tellp());
+                indice.setPosicion(indice.getPosicion()-sizeof(Hotel));
+                escAI.write((char*)&indice,sizeof(indice));
+
+            }else{
+                QMessageBox msgBox;
+
+                msgBox.setText("Se encontro:"+QString::fromStdString(hotel.getCodigo()));
+                msgBox.exec();
+            }
+            if(leerI.eof())break;
+            leerH.close();
+        }
+    }
+    leerI.close();
+    escAH.close();
+    escAI.close();
+    remove("Indices.txt");
+    remove("Hoteles.txt");
+    rename("IndicesAux.txt","Indices.txt");
+    rename("HotelesAux.txt","Hoteles.txt");
 }

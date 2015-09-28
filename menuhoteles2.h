@@ -23,8 +23,12 @@ public:
 private slots:
     void on_botonAceptarAgregaHotel_clicked();
     void cargar_Paises();
-
+    void limpiarTablaHoteles();
     void on_botonActualizarHoteles_clicked();
+
+    void on_botonBuscarModHoteles_clicked();
+
+    void on_botonEliminarModHoteles_clicked();
 
 private:
     Ui::MenuHoteles2 *ui;

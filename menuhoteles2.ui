@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -112,7 +112,7 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QPushButton" name="botonBuscarModEmpleados">
+         <widget class="QPushButton" name="botonBuscarModHoteles">
           <property name="text">
            <string>Buscar</string>
           </property>
@@ -121,59 +121,19 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QLineEdit" name="inputCodigoEmpleadoMod">
+           <widget class="QLineEdit" name="inputCodigoHotelMod">
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
             <property name="placeholderText">
-             <string>Codigo</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputNombreEmpleadoMod">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Nombre</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputUsuarioEmpleadoMod">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Usuario/Nickname</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputContraseniaEmpleadoMod">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Contraseña/Password</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inputTipoEmpleadoMod">
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="placeholderText">
-             <string>Supervisor &quot;S&quot; o  Normal &quot;N&quot;</string>
+             <string> Codigo del Hotel</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="botonGuardarModEmpleados">
+         <widget class="QPushButton" name="botonGuardarModHoteles">
           <property name="text">
            <string>Guardar</string>
           </property>
@@ -183,7 +143,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QTableWidget" name="tablaModificarEmpleados">
+    <widget class="QTableWidget" name="tablaModificarHoteles">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -242,59 +202,46 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QLineEdit" name="inputCodigoEmpleadoEliminar">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="inputCodigoHotelEliminar">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
           <property name="placeholderText">
-           <string>Codigo</string>
+           <string>Codigo del Hotel</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="inputNombreEmpleadoEliminar">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="placeholderText">
-           <string>Nombre</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
         </item>
         <item>
-         <widget class="QLineEdit" name="inputUsuarioEmpleadoEliminar">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
+         <widget class="QPlainTextEdit" name="mesajeRespuesta">
           <property name="placeholderText">
-           <string>Usuario/Nickname</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="inputContraseniaEmpleadoEliminar">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="placeholderText">
-           <string>Contraseña/Password</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="inputTipoEmpleadoEliminar">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="placeholderText">
-           <string>Supervisor &quot;S&quot; o  Normal &quot;N&quot;</string>
+           <string>Aqui se mostrara un Mensaje de Respuesta</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="botonEliminarModEmpleados">
+       <widget class="QPushButton" name="botonEliminarModHoteles">
         <property name="text">
          <string>Eliminar</string>
         </property>
