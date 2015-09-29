@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -50,7 +50,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="paisComboBox"/>
+       <widget class="QComboBox" name="paisComboBox">
+        <property name="cursor">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="inputNombreHotel">
@@ -205,6 +209,12 @@
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </spacer>
         </item>

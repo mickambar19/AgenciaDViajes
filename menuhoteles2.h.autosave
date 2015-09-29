@@ -25,6 +25,7 @@ private slots:
     void on_botonAceptarAgregaHotel_clicked();
     void cargar_Paises();
     void limpiarTablaHoteles();
+    void cargarIndices();
     void on_botonActualizarHoteles_clicked();
 
     void on_botonBuscarModHoteles_clicked();
