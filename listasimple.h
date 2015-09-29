@@ -77,7 +77,7 @@ void ListaSimple<T>::printAll(){
     n=primero;
     while(n!=NULL){
     e=n->getData();
-    cout<<i<<"\t"<<e<<endl;
+    //cout<<i<<"\t"<<e<<endl;
     n=n->getNext();
     i++;
     }
@@ -88,7 +88,7 @@ void ListaSimple<T>::printOne(NodoDoble<T>* a){
     T e;
     if(a!=NULL)
     e=a->getData();
-    cout<<"\t"<<e<<endl;
+    //cout<<"\t"<<e<<endl;
     }
 
     template <class T>
@@ -127,7 +127,7 @@ NodoDoble<T>* ListaSimple<T>::linealSearch(T elem){
     while(p!=NULL){
     if(elem==p->getData()){
     e=p->getData();
-    cout<<"te quedaste ciclado\n";
+    //cout<<"te quedaste ciclado\n";
     return p;
     }
     p=p->getNext();
@@ -275,13 +275,13 @@ while(g->getPosn()<=h->getPosn())
 {
     while(g->getData()<pivote->getData()) g=g->getNext();
     while(pivote->getData()<h->getData()) h=h->getPrev();
-    cout<<"aqui estas 4\n";
+    //cout<<"aqui estas 4\n";
     if(g->getPosn()<=h->getPosn())
     {
         e=g->getData();
-        cout<<"g: \n"<<e<<g->getPosn()<<endl;
+        //cout<<"g: \n"<<e<<g->getPosn()<<endl;
         e=h->getData();
-        cout<<"h: \n"<<e<<h->getPosn()<<endl;
+        //cout<<"h: \n"<<e<<h->getPosn()<<endl;
         aux=g->getData();
         g->setData(h->getData());
         h->setData(aux);
@@ -290,9 +290,9 @@ while(g->getPosn()<=h->getPosn())
             h=h->getPrev();
         }
     }
-        cout<<"aqui estas6\n";
+        //cout<<"aqui estas6\n";
 }
-cout<<"aqui estas7\n";
+//cout<<"aqui estas7\n";
 if(izq->getPosn()<h->getPosn())quickSort(izq,h);
 if(g->getPosn()<der->getPosn())quickSort(g,der);
 }
