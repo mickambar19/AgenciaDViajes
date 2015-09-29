@@ -36,6 +36,8 @@ private slots:
 
     void on_botonGuardarModHoteles_clicked();
 
+    void on_guardarIndices_clicked();
+    
 private:
     Ui::MenuHoteles2 *ui;
     ListaSimple<IndiceHotel> l;
