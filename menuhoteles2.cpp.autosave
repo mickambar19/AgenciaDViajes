@@ -135,7 +135,19 @@ void MenuHoteles2::limpiarTablaHoteles()
 void MenuHoteles2::cargarIndices()
 {
     IndiceHotel indice;
-    ifstream leerI("Indices.txt")
+    ifstream leerI("Indices.txt");
+    if(!leerI.good())
+    {
+        
+    }else{
+        while(!leerI.eof()){
+            if(leerI.eof())break;
+            leerI.read((char *)&indice,sizeof(IndiceHotel));
+            l.insertOneAfter(l.first(),);
+            if(leerI.eof())break;
+        }
+    }
+    leerI.close();
 }
 
 void MenuHoteles2::on_botonActualizarHoteles_clicked()
