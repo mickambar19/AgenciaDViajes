@@ -7,6 +7,9 @@
 #include "hotel.h"
 #include "indicehotel.h"
 #include "listasimple.h"
+#include "secundario.h"
+#include "nodosecundario.h"
+
 using namespace std;
 
 namespace Ui {
@@ -44,6 +47,7 @@ private slots:
 private:
     Ui::MenuHoteles2 *ui;
     ListaSimple<IndiceHotel> l;
+    ListaSimple<NodoSecundario> lsecundaria;
 };
 
 

@@ -9,6 +9,7 @@ MenuHoteles2::MenuHoteles2(QWidget *parent) :
     //cargar lista de Paises
     cargar_Paises();
     l.initialize();
+    lsecundaria.initialize();
     cargarIndices();
 }
 
