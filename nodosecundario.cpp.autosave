@@ -1,0 +1,38 @@
+#include "nodosecundario.h"
+
+NodoSecundario::NodoSecundario()
+{
+}
+
+bool NodoSecundario::operator==(const Nodosecundario &d){
+    string obj1,obj2;
+    obj1=pais;
+    obj2=d.pais;
+     return obj1==obj2;
+    }
+bool NodoSecundario::operator<(const Nodosecundario &d){
+    string obj1,obj2;
+    obj1=pais;
+     obj2=d.pais;
+    return obj1<obj2;
+    }
+bool NodoSecundario::operator<=(const Nodosecundario &d){
+    string obj1,obj2;
+    obj1=pais;
+     obj2=d.pais;
+    return obj1<=obj2;
+    }
+ostream& operator<<(ostream& os,Nodosecundario &d){
+       os<<"\n-----------------\n";
+       os<<"compuesta       :"<<d.compuesta<<endl;
+       os<<"siguientenodo   :"<<d.sigNodo<<endl;
+       os<<"extension       :"<<d.extension<<endl;
+       os<<"-----------------\n\n";
+    return os;
+    }
+bool NodoSecundario::operator!=(const Nodosecundario &d){
+    string obj1,obj2;
+    obj1=pais;
+    obj2=d.pais;
+     return obj1!=obj2;
+    }
