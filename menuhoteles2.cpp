@@ -600,16 +600,27 @@ void MenuHoteles2::seguimiento(NodoSecundario bus)
         textoInformativo += "\nPais:\n";
         textoInformativo += QString::fromStdString(nodosecundario.pais);
         textoInformativo += "\nSiguiente Nodo:\n";
-       // textoInformativo += QString::fromStdString((char *)nodosecundario.sigNodo);
+        if(nodosecundario.sigNodo!=NULL){
+            stringstream ss;
+            ss << nodosecundario.sigNodo;
+            string name = ss.str();
+            QString nodoS = name.c_str();
+           textoInformativo += nodoS;
+        }else{
+
+           textoInformativo += "-1";
+        }
         textoInformativo += "\n# Nodo:\n";
         textoInformativo += QString::number(deaqui->getPosn());
         deaqui=deaqui->getData().sigNodo;
 
     }
-    QMessageBox msgBox;
-    msgBox.setText("Todos los indices de secundario de" + QString::fromStdString( bus.pais));
-    msgBox.setInformativeText(textoInformativo);
-    msgBox.exec();
+    if(textoInformativo!=""){
+        QMessageBox msgBox;
+        msgBox.setText("Todos los indices de secundario de" + QString::fromStdString( bus.pais));
+        msgBox.setInformativeText(textoInformativo);
+        msgBox.exec();
+    }
 }
 /*
 void archivoS(){
@@ -638,7 +649,7 @@ void MenuHoteles2::on_mostrarListaSecundaria_clicked()
     QString informativeText;
     NodoSecundario nodosecundario;
     string cadena;
-    box1.setText("Lo que esta en Secundario.txt");
+
     if(!leeS.good())
     {
 
@@ -683,9 +694,7 @@ void MenuHoteles2::on_mostrarListaSecundaria_clicked()
      box1.setInformativeText(informativeText);
      box1.exec();
 
-     for(int x=ui->paisComboBox->count()-1; x>0 ;x--){
-         box1.setInformativeText(QString::number(ui->paisComboBox->count()));
-         box1.exec();
+     for(int x=ui->paisComboBox->count()-1; x>=0 ;x--){
          cadena = ui->paisComboBox->itemText(x).toStdString();
          strcpy(nodosecundario.pais,cadena.c_str());
          seguimiento(nodosecundario);
