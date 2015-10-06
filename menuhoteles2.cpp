@@ -132,6 +132,24 @@ void MenuHoteles2::limpiarTablaHoteles()
     }
 }
 
+void MenuHoteles2::cargarIndices()
+{
+    IndiceHotel indice;
+    ifstream leerI("Indices.txt");
+    if(!leerI.good())
+    {
+        
+    }else{
+        while(!leerI.eof()){
+            if(leerI.eof())break;
+            leerI.read((char *)&indice,sizeof(IndiceHotel));
+            l.insertOneAfter(indice,l.first());
+            if(leerI.eof())break;
+        }
+    }
+    leerI.close();
+}
+
 void MenuHoteles2::on_botonActualizarHoteles_clicked()
 {
     limpiarTablaHoteles();
@@ -365,4 +383,20 @@ void MenuHoteles2::on_botonGuardarModHoteles_clicked()
 
     remove("Hoteles.txt");
     rename("HotelesAux.txt","Hoteles.txt");
+}
+
+void MenuHoteles2::on_guardarIndices_clicked()
+{
+    IndiceHotel indice;
+    ofstream escI("IndicesAux.txt");
+    NodoDoble<IndiceHotel> *nodoActual;
+    nodoActual = l.first();
+    while(nodoActual != NULL){
+        indice = nodoActual->getData();
+        escI.read((char *)&indice,sizeof(IndiceHotel));
+        nodoActual = nodoActual->getNext();
+    }
+    escI.close();
+    remove("Indices.txt");
+    rename("IndicesAux.txt","Indices.txt");
 }
