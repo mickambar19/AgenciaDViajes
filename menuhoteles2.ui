@@ -6,24 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>489</height>
+    <width>650</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Menu Hoteles</string>
   </property>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
      <x>60</x>
      <y>10</y>
-     <width>561</width>
-     <height>461</height>
+     <width>551</width>
+     <height>451</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -153,7 +153,7 @@
        <x>10</x>
        <y>310</y>
        <width>531</width>
-       <height>121</height>
+       <height>111</height>
       </rect>
      </property>
     </widget>
@@ -168,7 +168,7 @@
        <x>10</x>
        <y>20</y>
        <width>521</width>
-       <height>381</height>
+       <height>351</height>
       </rect>
      </property>
     </widget>
@@ -176,7 +176,7 @@
      <property name="geometry">
       <rect>
        <x>450</x>
-       <y>410</y>
+       <y>390</y>
        <width>75</width>
        <height>23</height>
       </rect>
@@ -242,7 +242,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="mesajeRespuesta">
+         <widget class="QPlainTextEdit" name="mensajeRespuesta">
           <property name="placeholderText">
            <string>Aqui se mostrara un Mensaje de Respuesta</string>
           </property>
@@ -260,6 +260,45 @@
      </layout>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="guardarIndices">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>480</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Guardar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="mostrarLista">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>480</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Mostrar Lista</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="mostrarListaSecundaria">
+   <property name="geometry">
+    <rect>
+     <x>254</x>
+     <y>480</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lista Secundaria</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -10,6 +10,7 @@ MenuEmpleados::MenuEmpleados(QWidget *parent) :
     ui->inputContraseniaEmpleadoMod->setEnabled(false);
     ui->inputCodigoEmpleado->setText( QString::number(contarRegistros()));
     ui->inputContraseniaEmpleadoEliminar->setEnabled(false);
+
 }
 
 MenuEmpleados::~MenuEmpleados()
@@ -73,12 +74,17 @@ int MenuEmpleados::contarRegistros()
     {
         while(!lee.eof())
         {
-            lee.read((char *)&empleado,sizeof(empleado));
-
             if(lee.eof())break;
 
+            lee.read((char *)&empleado,sizeof(Empleado));
 
+
+            QMessageBox msgBox;
+            msgBox.setText(QString::number(i));
+            msgBox.exec();
+            if(lee.eof())break;
                 i++; //se incrementa un nuevo registro empleado
+
         }
     }
     lee.close();

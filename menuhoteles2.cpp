@@ -1,5 +1,8 @@
 #include "menuhoteles2.h"
 #include "ui_menuhoteles2.h"
+#include <sstream>
+#include <string>
+#include "secundario.h"
 #include <QMessageBox>
 MenuHoteles2::MenuHoteles2(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +12,11 @@ MenuHoteles2::MenuHoteles2(QWidget *parent) :
     //cargar lista de Paises
     cargar_Paises();
     l.initialize();
+    lsecundaria.initialize(); //cargar lista secundaria y guardar la posicion
+    numpos=0;
+    cargarIndices();
+    Secundario i;
+    i.inicializar();
 }
 
 MenuHoteles2::~MenuHoteles2()
@@ -54,7 +62,7 @@ void MenuHoteles2::on_botonAceptarAgregaHotel_clicked()
         hotel.setTarifa(tarifa.toStdString());
 
         ofstream escH("Hoteles.txt",ios::app);
-        ofstream escI("Indices.txt",ios::app);
+
 
         long int diceTel;
         escH.write((char*)&hotel,sizeof(Hotel));
@@ -63,15 +71,24 @@ void MenuHoteles2::on_botonAceptarAgregaHotel_clicked()
         indice.posicion=escH.tellp();
         diceTel = escH.tellp();
         indice.setPosicion(indice.posicion-sizeof(Hotel));
-        escI.write((char*)&indice,sizeof(indice));
+        l.insertOneAfter(indice,l.last());
+
+        NodoSecundario secundario;
+
+        strcpy(secundario.pais,paisDeHotel.toStdString().c_str());
+        strcpy(secundario.codigo,indice.getLlave().c_str());
+        lsecundaria.insertOneAfter(secundario,lsecundaria.last());
+        lsecundaria.last()->setposn(numpos);
+        numpos++;
+
         QMessageBox msgBox;
         msgBox.setText("Inicio de objeto:"+QString::number(indice.getPosicion())+
                        "\nFin de objeto:"+QString::number(indice.getPosicion()+sizeof(hotel))+
                        "\nDice tellp:"+QString::number(diceTel));
 
         msgBox.exec();
-        escI.close();
         escH.close();
+        on_guardarIndices_clicked();
     }
 }
 
@@ -111,6 +128,7 @@ void MenuHoteles2::cargar_Paises()
         }
     }
     lee.close();
+    ui->paisComboBox->clear();
     ui->paisComboBox->addItems(paisesDisponibles);
 }
 
@@ -132,23 +150,62 @@ void MenuHoteles2::limpiarTablaHoteles()
     }
 }
 
+
+void MenuHoteles2::limpiarTablaMod()
+{
+
+    for(int i = 0; i < ui->tablaModificarHoteles->rowCount();)
+    {
+        delete ui->tablaModificarHoteles->item(i,0);
+        delete ui->tablaModificarHoteles->item(i,1);
+        delete ui->tablaModificarHoteles->item(i,2);
+        delete ui->tablaModificarHoteles->item(i,3);
+
+        ui->tablaModificarHoteles->removeRow(i);
+    }
+    for(int i = 0; i < ui->tablaModificarHoteles->columnCount();)
+    {
+        ui->tablaModificarHoteles->removeColumn(i);
+    }
+}
+
+
 void MenuHoteles2::cargarIndices()
 {
+    NodoSecundario nodosecundario;
     IndiceHotel indice;
+    Hotel hotel;
     ifstream leerI("Indices.txt");
+
+
+    l.deleteAll();
+    l.initialize();
     if(!leerI.good())
     {
-        
+
     }else{
         while(!leerI.eof()){
+            leerI.read((char *)&indice, sizeof(indice));
             if(leerI.eof())break;
-            leerI.read((char *)&indice,sizeof(IndiceHotel));
-            l.insertOneAfter(indice,l.first());
-            if(leerI.eof())break;
+            l.insertOneAfter(indice,l.last());
+
+            ifstream leerH("Hoteles.txt",ios::app);
+            leerH.seekg(indice.getPosicion()-1,leerH.beg);
+            leerH.read((char*)&hotel,sizeof(Hotel));
+
+            strcpy(nodosecundario.pais,hotel.getPaisDeHotel().c_str());
+            strcpy(nodosecundario.codigo,l.last()->getData().getLlave().c_str());
+
+            lsecundaria.insertOneAfter(nodosecundario,lsecundaria.last());
+            lsecundaria.last()->setposn(numpos);
+            numpos++;
+
         }
     }
     leerI.close();
 }
+
+
 
 void MenuHoteles2::on_botonActualizarHoteles_clicked()
 {
@@ -156,15 +213,17 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
     QTableWidgetItem *elemento;
     Hotel hotel;
     IndiceHotel indice;
-    ifstream leerI("Indices.txt");
+
     QStringList titulosParteSuperior;
     int i = 0;
     titulosParteSuperior<<"Codigo"<<"NombrePais"<<"NombreHotel"<<"Tarifa"<<"Tipo";
     //limpiartablaHoteles();
-    if(!leerI.good())
+    NodoDoble<IndiceHotel> *nodoActual;
+    nodoActual= l.first();
+    if(l.isEmpty())
     {
         QMessageBox msgBox;
-        msgBox.setText("No existe el archivo de Empleados");
+        msgBox.setText("No existe el ningun Indice");
         msgBox.exec();
     }else
     {
@@ -174,21 +233,23 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
         ui->tablaHoteles->insertColumn(3);
         ui->tablaHoteles->insertColumn(4);
         ui->tablaHoteles->setHorizontalHeaderLabels(titulosParteSuperior);
-        while(!leerI.eof())
+        while(nodoActual!=NULL)
         {
 
             ui->tablaHoteles->insertRow(i);
-            leerI.read((char*)&indice,sizeof(indice));
+            indice = nodoActual->getData();
 
             ifstream leerH("Hoteles.txt",ios::app);
             QMessageBox msgBox;
 
             msgBox.setText("Tellp:"+QString::number(leerH.tellg()));
-            msgBox.exec();
-            leerH.seekg(indice.getPosicion()-1,leerH.beg);
+            //msgBox.exec();
+             leerH.seekg(indice.getPosicion()-1,leerH.beg);
+
+
             leerH.read((char*)&hotel,sizeof(Hotel));
 
-            if(leerI.eof())break;
+
             elemento = new QTableWidgetItem(QString::fromStdString(hotel.getCodigo()));
             ui->tablaHoteles->setItem(i,0,elemento);
             elemento = new QTableWidgetItem(QString::fromStdString(hotel.getPaisDeHotel()));
@@ -200,12 +261,11 @@ void MenuHoteles2::on_botonActualizarHoteles_clicked()
             elemento = new QTableWidgetItem(QString::fromStdString(hotel.getTarifa()));
             ui->tablaHoteles->setItem(i,4,elemento);
             i++;
-            if(leerI.eof())break;
+            nodoActual= nodoActual->getNext();
             leerH.close();
         }
     }
-    ui->tablaHoteles->removeRow(ui->tablaHoteles->rowCount()-1);
-    leerI.close();
+
 }
 
 void MenuHoteles2::on_botonBuscarModHoteles_clicked()
@@ -213,15 +273,17 @@ void MenuHoteles2::on_botonBuscarModHoteles_clicked()
     QTableWidgetItem *elemento;
     Hotel hotel;
     IndiceHotel indice;
-    ifstream leerI("Indices.txt");
     QStringList titulosParteSuperior;
+    NodoDoble<IndiceHotel> *nodoActual;
+    nodoActual = l.first();
     int i = 0;
+    limpiarTablaMod();
     titulosParteSuperior<<"Codigo"<<"NombrePais"<<"NombreHotel"<<"Tarifa"<<"Tipo";
-    //limpiartablaHoteles();
-    if(!leerI.good())
+
+    if(l.isEmpty())
     {
         QMessageBox msgBox;
-        msgBox.setText("No existe el archivo de Empleados");
+        msgBox.setText("No existen indices");
         msgBox.exec();
     }else
     {
@@ -231,20 +293,22 @@ void MenuHoteles2::on_botonBuscarModHoteles_clicked()
         ui->tablaModificarHoteles->insertColumn(3);
         ui->tablaModificarHoteles->insertColumn(4);
         ui->tablaModificarHoteles->setHorizontalHeaderLabels(titulosParteSuperior);
-        while(!leerI.eof())
+        while(nodoActual!=NULL)
         {
 
-            leerI.read((char*)&indice,sizeof(indice));
+            indice = nodoActual->getData();
 
             ifstream leerH("Hoteles.txt",ios::app);
             QMessageBox msgBox;
 
             msgBox.setText("Tellp:"+QString::number(leerH.tellg()));
             msgBox.exec();
+            // leerH.seekg(indice.getPosicion(),leerH.beg);
             leerH.seekg(indice.getPosicion()-1,leerH.beg);
+
             leerH.read((char*)&hotel,sizeof(Hotel));
             QString actualHotel = QString::fromStdString(hotel.getCodigo());
-            if(leerI.eof())break;
+
             if(actualHotel.toInt() == ui->inputCodigoHotelMod->text().toInt()){
                 ui->tablaModificarHoteles->insertRow(i);
                 elemento = new QTableWidgetItem(QString::fromStdString(hotel.getCodigo()));
@@ -259,12 +323,10 @@ void MenuHoteles2::on_botonBuscarModHoteles_clicked()
                 ui->tablaModificarHoteles->setItem(i,4,elemento);
                 i++;
             }
-            if(leerI.eof())break;
+            nodoActual = nodoActual->getNext();
             leerH.close();
         }
     }
-    leerI.close();
-
 }
 
 void MenuHoteles2::on_botonEliminarModHoteles_clicked()
@@ -272,54 +334,54 @@ void MenuHoteles2::on_botonEliminarModHoteles_clicked()
 
     Hotel hotel;
     IndiceHotel indice;
-    ifstream leerI("Indices.txt");
-    ofstream escAI("IndicesAux.txt",ios::app);
+    NodoDoble<IndiceHotel> *nodoActual, *encontrado;
+    ListaSimple<IndiceHotel> lAux;
+    encontrado = NULL;
+    lAux.initialize();
+    nodoActual = l.first();
     ofstream escAH("HotelesAux.txt",ios::app);
     //limpiartablaHoteles();
-    if(!leerI.good())
+    if(l.isEmpty())
     {
         QMessageBox msgBox;
-        msgBox.setText("No existe el archivo de Empleados");
+        msgBox.setText("No existen Indices");
         msgBox.exec();
     }else
     {
-        while(!leerI.eof())
+        while(nodoActual!=NULL)
         {
-
-            leerI.read((char*)&indice,sizeof(indice));
-
+            indice = nodoActual->getData();
             ifstream leerH("Hoteles.txt",ios::app);
 
             leerH.seekg(indice.getPosicion()-1,leerH.beg);
             leerH.read((char*)&hotel,sizeof(Hotel));
             QString actualHotel = QString::fromStdString(hotel.getCodigo());
-            if(leerI.eof())break;
-            if(actualHotel.toInt() != ui->inputCodigoHotelEliminar->text().toInt()){
-
+            if(actualHotel != ui->inputCodigoHotelEliminar->text()){
                 escAH.write((char *)&hotel,sizeof(Hotel));
                 escAH.seekp(0,escAH.end);
                 indice.setLlave(hotel.getCodigo());
                 indice.setPosicion(escAH.tellp());
                 indice.setPosicion(indice.getPosicion()-sizeof(Hotel));
-                escAI.write((char*)&indice,sizeof(indice));
 
+                nodoActual->setData(indice);
             }else{
                 QMessageBox msgBox;
-
                 msgBox.setText("Se encontro:"+QString::fromStdString(hotel.getCodigo()));
                 msgBox.exec();
+                ui->mensajeRespuesta->insertPlainText("Se encontro y se elimino el hotel que deseabas.\n");
+                encontrado = nodoActual;
             }
-            if(leerI.eof())break;
+            nodoActual = nodoActual->getNext();
             leerH.close();
         }
     }
-    leerI.close();
+    if(encontrado!=NULL){
+        l.delete_e(encontrado);
+    }
     escAH.close();
-    escAI.close();
-    remove("Indices.txt");
     remove("Hoteles.txt");
-    rename("IndicesAux.txt","Indices.txt");
     rename("HotelesAux.txt","Hoteles.txt");
+    on_guardarIndices_clicked();
 }
 
 void MenuHoteles2::on_tabWidget_tabBarClicked(int index)
@@ -333,54 +395,59 @@ void MenuHoteles2::on_botonGuardarModHoteles_clicked()
 {
     Hotel hotel;
     IndiceHotel indice;
-    ifstream leerI("Indices.txt");
+    NodoDoble<IndiceHotel> *nodoActual;
     ofstream escAH("HotelesAux.txt",ios::app);
     //limpiartablaHoteles();
-    if(!leerI.good())
+    nodoActual = l.first();
+    if(l.isEmpty())
     {
         QMessageBox msgBox;
         msgBox.setText("No existe el archivo de Empleados");
         msgBox.exec();
     }else
     {
-        while(!leerI.eof())
+        while(nodoActual != NULL)
         {
 
-            leerI.read((char*)&indice,sizeof(indice));
+            indice = nodoActual->getData();
 
             ifstream leerH("Hoteles.txt",ios::app);
 
+            // leerH.seekg(indice.getPosicion(),leerH.beg);
             leerH.seekg(indice.getPosicion()-1,leerH.beg);
+
             leerH.read((char*)&hotel,sizeof(Hotel));
             QString actualHotel = QString::fromStdString(hotel.getCodigo());
-            if(leerI.eof())break;
+
             QTableWidgetItem* item = ui->tablaModificarHoteles->item(0,0);
             if(!item || item->text() == "")
             {
-
+                QMessageBox msgBox;
+                msgBox.setText("No se encuentra ningun indice con ese codigo.\n");
+                msgBox.exec();
             }else{
                 if(actualHotel.toInt() == ui->inputCodigoHotelMod->text().toInt()){
 
-                    QMessageBox msgBox;
-                    msgBox.setText("Se efectuaran los cambios");
-                    msgBox.exec();
+
                     hotel.setCodigo(ui->tablaModificarHoteles->item(0,0)->text().toStdString());
-                    hotel.setNombreHotel(ui->tablaModificarHoteles->item(0,1)->text().toStdString());
-                    hotel.setPaisDeHotel(ui->tablaModificarHoteles->item(0,2)->text().toStdString());
-                    hotel.setTarifa(ui->tablaModificarHoteles->item(0,3)->text().toStdString());
-                    hotel.setTipo(ui->tablaModificarHoteles->item(0,4)->text().toStdString());
+                    QMessageBox msgBox;
+                    msgBox.setText(ui->tablaModificarHoteles->item(0,0)->text()+"Se efectuaran los cambios");
+                    msgBox.exec();
+                    hotel.setPaisDeHotel(ui->tablaModificarHoteles->item(0,1)->text().toStdString());
+                    hotel.setNombreHotel(ui->tablaModificarHoteles->item(0,2)->text().toStdString());
+                    hotel.setTipo(ui->tablaModificarHoteles->item(0,3)->text().toStdString());
+                    hotel.setTarifa(ui->tablaModificarHoteles->item(0,4)->text().toStdString());
                 }
 
             }
             escAH.write((char *)&hotel,sizeof(Hotel));
 
-            if(leerI.eof())break;
+            nodoActual = nodoActual->getNext();
             leerH.close();
         }
     }
-    leerI.close();
     escAH.close();
-
+    on_guardarIndices_clicked();
     remove("Hoteles.txt");
     rename("HotelesAux.txt","Hoteles.txt");
 }
@@ -393,10 +460,224 @@ void MenuHoteles2::on_guardarIndices_clicked()
     nodoActual = l.first();
     while(nodoActual != NULL){
         indice = nodoActual->getData();
-        escI.read((char *)&indice,sizeof(IndiceHotel));
+        escI.write((char *)&indice,sizeof(IndiceHotel));
+
         nodoActual = nodoActual->getNext();
     }
     escI.close();
     remove("Indices.txt");
     rename("IndicesAux.txt","Indices.txt");
+}
+
+void MenuHoteles2::on_mostrarLista_clicked()
+{
+    NodoDoble<IndiceHotel> *nodoActual;
+    QString textoInformativo;
+    int x = 0;
+    nodoActual = l.first();
+    while(nodoActual!= NULL){
+        textoInformativo += "\n\n";
+        textoInformativo += QString::number(x);
+        textoInformativo += "\nLlave:\n";
+        textoInformativo += QString::fromStdString(nodoActual->getData().getLlave());
+        textoInformativo += "\nPosicion:\n";
+        textoInformativo += QString::number(nodoActual->getData().getPosicion());
+        x++;
+        nodoActual = nodoActual->getNext();
+    }
+    QMessageBox msgBox;
+    msgBox.setText("Todos los indices");
+    msgBox.setInformativeText(textoInformativo);
+    msgBox.exec();
+}
+
+void MenuHoteles2::ligarlista(NodoSecundario bus)
+{
+    NodoDoble<NodoSecundario> *deaqui;
+    NodoDoble<NodoSecundario> *aca;
+    Secundario secundario;
+    NodoSecundario nodosecundario;
+
+    deaqui=lsecundaria.linealSearch(bus);
+    if(deaqui==NULL){
+
+    }else{
+        ifstream leerS("Secundario.txt");
+        ofstream escS("AuxiliarS.txt",ios::app);
+        if(!leerS.good())
+        {
+            //cout<<"Tu archivo no existe\n";
+        }else
+        {
+            while(!leerS.eof())
+            {
+
+                leerS.read((char*)&secundario,sizeof(Secundario));
+                if(leerS.eof())break;
+                if(strcmp(secundario.pais,bus.pais)==0)
+                {
+                    if(deaqui==NULL)
+                    {
+                        escS.write((char *)&secundario,sizeof(Secundario));
+
+                    }else
+                    {
+                        secundario.primerNodo=deaqui->getPosn();
+                        escS.write((char *)&secundario,sizeof(Secundario));
+                    }
+                }else
+                {
+                    escS.write((char *)&secundario,sizeof(Secundario));
+                }
+                if(leerS.eof())break;
+            }
+        }
+
+        leerS.close();
+        escS.close();
+        remove("Secundario.txt");
+        rename("AuxiliarS.txt","Secundario.txt");
+
+        while(deaqui!=NULL)
+        {
+
+            aca=deaqui;
+
+            aca=aca->getNext();
+
+            while(aca!=NULL){
+                if(aca->getData()==bus )break;
+                aca=aca->getNext();
+            }
+
+
+            if(aca!=NULL){
+                nodosecundario=deaqui->getData();
+                nodosecundario.sigNodo=aca;
+                deaqui->setData(nodosecundario);
+                nodosecundario=deaqui->getData();
+
+                deaqui=aca;
+            }
+            if(aca==NULL)
+            {
+                nodosecundario=deaqui->getData();
+                nodosecundario.sigNodo=NULL;
+                deaqui->setData(nodosecundario);
+                break;
+
+
+            }
+            if(aca->getNext()==NULL)
+            {
+
+                nodosecundario=deaqui->getData();
+                nodosecundario.sigNodo=NULL;
+                deaqui->setData(nodosecundario);
+                nodosecundario=deaqui->getData();
+                break;
+            }
+
+        }
+
+    }
+
+}
+void MenuHoteles2::seguimiento(NodoSecundario bus)
+{
+    NodoDoble<NodoSecundario> *deaqui;
+    NodoSecundario nodosecundario;
+    Hotel objeto;
+    QString textoInformativo;
+    deaqui=lsecundaria.linealSearch(bus);
+    //cout<<"Aqui comienza seguimiento\n";
+    while(deaqui!=NULL)
+    {
+
+        nodosecundario=deaqui->getData();
+        textoInformativo += "\n\nCodigo\n";
+        textoInformativo += QString::fromStdString(nodosecundario.codigo);
+        textoInformativo += "\nPais:\n";
+        textoInformativo += QString::fromStdString(nodosecundario.pais);
+        textoInformativo += "\nSiguiente Nodo:\n";
+        textoInformativo += QString::fromStdString((char *)nodosecundario.sigNodo);
+        deaqui=deaqui->getData().sigNodo;
+        if(deaqui==NULL) break;
+    }
+    QMessageBox msgBox;
+    msgBox.setText("Todos los indices de secundario");
+    msgBox.setInformativeText(textoInformativo);
+    msgBox.exec();
+}
+/*
+void archivoS(){
+    ifstream leerS("Secundario.txt");
+    if(!leerS.good()){
+       // cout<<"Tu archivo no existe\n";
+    }else
+    {
+        while(!leerS.eof())
+        {
+            leerS.read((char*)&secundario,sizeof(Secundario));
+            if(leerS.eof())break;
+         //   cout<<secundario;
+        }
+    }
+    leerS.close();
+}
+*/
+
+void MenuHoteles2::on_mostrarListaSecundaria_clicked()
+{
+
+    ifstream leeS("Secundario.txt");
+    Secundario secundario;
+    QMessageBox box1;
+    QString informativeText;
+    NodoSecundario nodosecundario;
+    string cadena;
+    box1.setText("Lo que esta en Secundario.txt");
+    if(!leeS.good())
+    {
+
+    }else{
+       while(!leeS.eof()){
+           leeS.read((char *)&secundario,sizeof(Secundario));
+           if(leeS.eof())break;
+
+
+            informativeText += QString::fromStdString(secundario.pais);
+            informativeText += QString::number(secundario.primerNodo);
+            informativeText += QString::fromStdString("\n");
+       }
+
+    }
+     box1.setInformativeText(informativeText);
+     box1.exec();
+     leeS.close();
+     for(int x=ui->paisComboBox->count(); x>=0 ;x--){
+         cadena = ui->paisComboBox->itemText(x).toStdString();
+         strcpy(nodosecundario.pais,cadena.c_str());
+         ligarlista(nodosecundario);
+     }
+     NodoDoble<NodoSecundario> *nodo;
+     nodo=lsecundaria.first();
+     informativeText ="";
+     while(nodo!=NULL){
+         stringstream ss;
+         ss << nodo->getData().sigNodo;
+         string name = ss.str();
+         QString nodoS = name.c_str();
+         informativeText += "Pais: ";
+         informativeText += QString::fromStdString(nodo->getData().pais);
+         informativeText += "\nCodigo: ";
+         informativeText += QString::fromStdString(nodo->getData().codigo);
+         informativeText += "\nSiguienteNodo: ";
+         informativeText += nodoS;
+         informativeText += "\n";
+         nodo=nodo->getNext();
+     }
+
+     box1.setInformativeText(informativeText);
+     box1.exec();
 }

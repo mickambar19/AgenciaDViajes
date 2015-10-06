@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     indicehotel.cpp \
     menuhoteles2.cpp \
     listasimple.cpp \
-    nododoble.cpp
+    nododoble.cpp \
+    nodosecundario.cpp \
+    secundario.cpp
 
 HEADERS  += menu.h \
     destino.h \
@@ -39,7 +41,9 @@ HEADERS  += menu.h \
     indicehotel.h \
     menuhoteles2.h \
     listasimple.h \
-    nododoble.h
+    nododoble.h \
+    nodosecundario.h \
+    secundario.h
 
 FORMS    += menu.ui \
     menudestinos.ui \
